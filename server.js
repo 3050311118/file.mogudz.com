@@ -231,7 +231,7 @@ function weixinTemplateRequest(content){
 function WeixinTemplatePush(openid,content,name,sn,model){
     var myDate = new Date();        
     // var alarmDate = myDate.getYear()+"年"+myDate.getMonth()+"月"+myDate.getDate()+"日"+myDate.getHours()+"点"+myDate.getMinutes()+"分";
-    var alarmDate = myDate.getYear()+"年"+myDate.getMonth()+"月"+myDate.getDate()+"日"+myDate.getHours()+"时"+myDate.getMinutes()+"分";
+    var alarmDate = (myDate.getYear()-100)+"年"+myDate.getMonth()+"月"+myDate.getDate()+"日"+myDate.getHours()+"时"+myDate.getMinutes()+"分";
 
     var templatePush={ 
       "touser":openid, 
