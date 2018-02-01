@@ -20,12 +20,12 @@ app.use(cookieParser());
 app.use(express.json());
 
 var tokenValue={};
-var redisClient = redis.createClient();
-redisClient.on('ready',function(err){console.log('redisClient ready');});
-redisClient.on("error", function (err) {console.log("redisClient Error " + err);});
-var mqttClient = mqtt.connect({ port: 2568, host: 'www.mogudz.com', keepalive: 10000});   
-mqttClient.on('connect', function () {console.log("mqttjs connected");});
-mqttClient.on('close',function(packet){}); 
+// var redisClient = redis.createClient();
+// redisClient.on('ready',function(err){console.log('redisClient ready');});
+// redisClient.on("error", function (err) {console.log("redisClient Error " + err);});
+// var mqttClient = mqtt.connect({ port: 2568, host: 'www.mogudz.com', keepalive: 10000});   
+// mqttClient.on('connect', function () {console.log("mqttjs connected");});
+// mqttClient.on('close',function(packet){}); 
 
 var config = {
   token: wxconfig.token,
@@ -92,9 +92,9 @@ app.get('/getwxinfo', function (req, res) {
                                console.log(data.openid)
                                console.log(data.nickname)
                                console.log(data.headimgurl)
-                               redisClient.hmset(data.openid,"nickname",data.nickname,"img",data.headimgurl,function(err,response){
-                                  console.log(err,response);
-                               });
+                               // redisClient.hmset(data.openid,"nickname",data.nickname,"img",data.headimgurl,function(err,response){
+                               //    console.log(err,response);
+                               // });
                            }else{
 
                            }
@@ -122,11 +122,15 @@ app.post('/template', function (req, res) {
   });
   req.on('end', function() {
     if(req.rawBody !== ""){
-       var content = new Buffer(req.rawBody.substr(1), 'base64').toString('utf8')
+       var reqStr=req.rawBody
+       var str1=reqStr.substr(2)
+       var reqStr=reqStr.substr(0,1)+str1
+       console.log(reqStr)
+       var content = new Buffer(reqStr, 'base64').toString('utf8')
        try{
          console.log(content)
          var json=JSON.parse(content)
-         WeixinTemplatePush(json.i,json.c,json.n,json.s,json.m)
+         WeixinTemplatePush(json.i,json.c,json.n,json.s)
          //微信号 报警内容 设备名 序列号
        }catch(e){
          console.log("template解析异常")
@@ -143,11 +147,11 @@ app.get('/custom', function (req, res) {
 app.get('/getdevice', function (req, res) {
   var openid=req.query.openid;
   //sadd
-  redisClient.smembers("dev_"+openid,function(err,response){  
-      if(!err){  
-          res.json(response)
-      }
-  });         
+  // redisClient.smembers("dev_"+openid,function(err,response){  
+  //     if(!err){  
+  //         res.json(response)
+  //     }
+  // });         
 }) 
 
 app.get('/monitor', function (req, res) {
@@ -177,7 +181,7 @@ function BandAction(openid,toDev){
   arr.t="wxbd";
   arr.i=openid;
   console.log(JSON.stringify(arr));
-  mqttClient.publish(toDev+'/sub',JSON.stringify(arr));
+  // mqttClient.publish(toDev+'/sub',JSON.stringify(arr));
 }
 //微信解除绑定动作
 function JCBandAction(openid,toDev){
@@ -185,7 +189,7 @@ function JCBandAction(openid,toDev){
   arr.t="wxjc";
   arr.i=openid;
   console.log(JSON.stringify(arr));
-  mqttClient.publish(toDev+'/sub',JSON.stringify(arr));
+  // mqttClient.publish(toDev+'/sub',JSON.stringify(arr));
 }
 
 //定时获取微信access_token
@@ -228,15 +232,15 @@ function weixinTemplateRequest(content){
 // {{remark.DATA}}
 // WeixinTemplatePush(json.i,json.c,json.n,json.s,json.m)
 //微信号 报警内容 设备名 序列号 设备型号
-function WeixinTemplatePush(openid,content,name,sn,model){
+function WeixinTemplatePush(openid,content,name,sn){
     var myDate = new Date();        
     // var alarmDate = myDate.getYear()+"年"+myDate.getMonth()+"月"+myDate.getDate()+"日"+myDate.getHours()+"点"+myDate.getMinutes()+"分";
     var alarmDate = (myDate.getYear()-100)+"年"+myDate.getMonth()+"月"+myDate.getDate()+"日"+myDate.getHours()+"时"+myDate.getMinutes()+"分";
-
+    var model=sn.substr(0,3)
     var templatePush={ 
       "touser":openid, 
       "template_id":"iEH2KZak1kUyuI7KnEBZ3WTSpp9fbQb69BiUInimQZQ", 
-      "url":"jssdk.mogudz.com/"+model+".php?name"+name, 
+      "url":"jssdk.mogudz.com/"+model+".php?sn="+sn, 
       "topcolor":"#FF0000", 
       "data":{ 
              "first": {
