@@ -44,6 +44,7 @@ app.use('/wechat', wechat(config, function (req, res, next) {
   if(message.MsgType === "event"){
     if(message.Event === "subscribe"){
       console.log(message.FromUserName)
+      res.reply("感谢使用蘑菇智能")
     }else if(message.Event === "unsubscribe"){
       console.log(message.FromUserName)
     }else if(message.Event === "scancode_waitmsg"){
@@ -65,6 +66,8 @@ app.use('/wechat', wechat(config, function (req, res, next) {
       res.reply("正在解除绑定!")
     }else if (content.substring(0,4)==="wxid"){
       res.reply(message.FromUserName)
+    }else{
+      res.reply("发送wxid获取您在蘑菇公众号的微信唯一ID")
     }
   }
 }));
