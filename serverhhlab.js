@@ -44,7 +44,7 @@ app.use('/wechat', wechat(config, function (req, res, next) {
   if(message.MsgType === "event"){
     if(message.Event === "subscribe"){
       console.log(message.FromUserName)
-      res.reply("感谢使用海闳控制精灵")
+      res.reply("感谢使用远程控制精灵")
     }else if(message.Event === "unsubscribe"){
       console.log(message.FromUserName)
     }else if(message.Event === "scancode_waitmsg"){
@@ -171,7 +171,7 @@ app.post('/test', function (req, res) {
 }) 
 
 
-var server = app.listen(2001, function () {
+var server = app.listen(2000, function () {
   var host = server.address().address
   var port = server.address().port
   console.log("wechat http://%s:%s", host, port)
