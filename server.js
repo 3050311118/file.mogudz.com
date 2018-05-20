@@ -59,14 +59,15 @@ app.use('/wechat', wechat(config, function (req, res, next) {
     if (content.substring(0,2)==="bd"){
       res.reply([
       {
-        title: '你来我家接我吧',
-        description: '这是女神与高富帅之间的对话',
+        title: 'xxxxx',
+        description: 'bbbbbbb',
         picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
         url: 'http://nodeapi.cloudfoundry.com/'
       },
-        {
-        title: '你来我家接我吧XX',
-        description: '这是女神与高富帅之间的对话',
+       {
+        title: 'yyyyyyyy',
+        description: 'yyyyyy',
+        picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
         url: 'http://nodeapi.cloudfoundry.com/'
       }
     ]);
