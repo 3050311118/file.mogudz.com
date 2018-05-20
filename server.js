@@ -57,9 +57,14 @@ app.use('/wechat', wechat(config, function (req, res, next) {
   }else if(message.MsgType === "text"){
     var content=message.Content;
     if (content.substring(0,2)==="bd"){
-      var clientID=content.substring(2);
-      BandAction(openid,clientID)
-      res.reply("正在绑定\r\n状态灯闪烁时点击确定按键完成绑定!")
+      res.reply([
+      {
+        title: '你来我家接我吧',
+        description: '这是女神与高富帅之间的对话',
+        picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
+        url: 'http://nodeapi.cloudfoundry.com/'
+      }
+    ]);
     }else if (content.substring(0,2)==="jc"){
       var clientID=content.substring(2);
       JCBandAction(openid,clientID)
