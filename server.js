@@ -62,13 +62,19 @@ app.use('/wechat', wechat(config, function (req, res, next) {
         title: 'xxxxx',
         description: 'bbbbbbb',
         picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
-        url: 'http://nodeapi.cloudfoundry.com/'
+        url: 'http://www.baidu.com/'
       },
        {
         title: 'yyyyyyyy',
         description: 'yyyyyy',
         picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
-        url: 'http://nodeapi.cloudfoundry.com/'
+        url: 'http://www.moguzn.com/'
+      },
+       {
+        title: 'xxxx',
+        description: 'yyyyyy',
+        picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
+        url: 'http://www.amobbs.com/'
       }
     ]);
     }else if (content.substring(0,2)==="jc"){
