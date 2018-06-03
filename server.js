@@ -98,7 +98,7 @@ app.use('/wechat', wechat(config, function (req, res, next) {
         title: '常见问题FAQ',
         description: 'yyyyyy',
         picurl: 'http://www.moguzn.com/images/pluglist/315M_TEMP.jpg',
-        url: 'http://www.amobbs.com/'
+        url: 'https://mp.weixin.qq.com/s/imB4FP3eDyfU-XjcTsJlpw'
       }
     ]);
     }else if (content.substring(0,2)==="jc"){
