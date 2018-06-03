@@ -35,14 +35,8 @@ var config = {
   checkSignature: true // 可选，默认为true。由于微信公众平台接口调试工具在明文模式下不发送签名，所以如要使用该测试工具，请将其设置为false
 };
 
-app.use(express.query());
-app.use('/wechat', wechat(config, function (req, res, next) {
-  // 微信输入信息都在req.weixin上
-  var message = req.weixin;
-  var openid = message.FromUserName;
-  console.log(message);
-  if(message.MsgType === "event"){
-    if(message.Event === "subscribe"){
+function replySMS(res)
+{
       res.reply([
       {
         title: '说明书合集',
@@ -87,6 +81,17 @@ app.use('/wechat', wechat(config, function (req, res, next) {
         url: 'https://mp.weixin.qq.com/s/imB4FP3eDyfU-XjcTsJlpw'
       }
     ]);
+}
+
+app.use(express.query());
+app.use('/wechat', wechat(config, function (req, res, next) {
+  // 微信输入信息都在req.weixin上
+  var message = req.weixin;
+  var openid = message.FromUserName;
+  console.log(message);
+  if(message.MsgType === "event"){
+    if(message.Event === "subscribe"){
+        replySMS(res)
     }else if(message.Event === "unsubscribe"){
       console.log(message.FromUserName)
     }else if(message.Event === "scancode_waitmsg"){
@@ -94,7 +99,10 @@ app.use('/wechat', wechat(config, function (req, res, next) {
       BandAction(openid,clientID)
       res.reply("正在绑定\r\n状态灯闪烁时点击确定按键完成绑定!")
     }else if(message.Event === "CLICK"){
-
+      if(message.EventKey=='V1001_GOOD')
+      {
+        replySMS(res)
+      }
     }
   }else if(message.MsgType === "text"){
     var content=message.Content;
