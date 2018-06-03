@@ -61,7 +61,7 @@ app.use('/wechat', wechat(config, function (req, res, next) {
       {
         title: '说明书合集',
         description: 'bbbbbbb',
-        picurl: 'http://www.moguzn.com/images/pluglist/315M_TEMP.jpg',
+        picurl: 'http://www.moguzn.com/weixin/images/sms.png',
         url: 'http://mp.weixin.qq.com/s?__biz=MzI2NzkzNTkxNg==&mid=100000004&idx=1&sn=e1afd8c55e05943aa1fbe30d4049c37d&chksm=6af608c75d8181d143b68bbdd1931e6ec6845de0be454bf29835ef736f404b61f779e02d2f82&mpshare=1&scene=23&srcid=05207VNkULZZgofAof2yMVXb#rd'
       },
        {
