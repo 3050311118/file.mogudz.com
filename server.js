@@ -43,20 +43,6 @@ app.use('/wechat', wechat(config, function (req, res, next) {
   console.log(message);
   if(message.MsgType === "event"){
     if(message.Event === "subscribe"){
-      console.log(message.FromUserName)
-      res.reply("感谢使用蘑菇智能")
-    }else if(message.Event === "unsubscribe"){
-      console.log(message.FromUserName)
-    }else if(message.Event === "scancode_waitmsg"){
-      var clientID=message.ScanCodeInfo.ScanResult;
-      BandAction(openid,clientID)
-      res.reply("正在绑定\r\n状态灯闪烁时点击确定按键完成绑定!")
-    }else if(message.Event === "CLICK"){
-
-    }
-  }else if(message.MsgType === "text"){
-    var content=message.Content;
-    if (content.substring(0,2)==="bd"){
       res.reply([
       {
         title: '说明书合集',
@@ -101,6 +87,19 @@ app.use('/wechat', wechat(config, function (req, res, next) {
         url: 'https://mp.weixin.qq.com/s/imB4FP3eDyfU-XjcTsJlpw'
       }
     ]);
+    }else if(message.Event === "unsubscribe"){
+      console.log(message.FromUserName)
+    }else if(message.Event === "scancode_waitmsg"){
+      var clientID=message.ScanCodeInfo.ScanResult;
+      BandAction(openid,clientID)
+      res.reply("正在绑定\r\n状态灯闪烁时点击确定按键完成绑定!")
+    }else if(message.Event === "CLICK"){
+
+    }
+  }else if(message.MsgType === "text"){
+    var content=message.Content;
+    if (content.substring(0,2)==="bd"){
+
     }else if (content.substring(0,2)==="jc"){
       var clientID=content.substring(2);
       JCBandAction(openid,clientID)
