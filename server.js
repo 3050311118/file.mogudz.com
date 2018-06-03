@@ -67,37 +67,37 @@ app.use('/wechat', wechat(config, function (req, res, next) {
        {
         title: '如何用微信报警',
         description: 'yyyyyy',
-        picurl: 'http://www.moguzn.com/images/pluglist/315M_TEMP.jpg',
+        picurl: 'http://www.moguzn.com/weixin/images/wechat.png',
         url: 'https://mp.weixin.qq.com/s/Zce11DdP8O_wqip3QqUxfw'
       },
        {
         title: '如何用群发邮件报警',
         description: 'yyyyyy',
-        picurl: 'http://www.moguzn.com/images/pluglist/315M_TEMP.jpg',
+        picurl: 'http://www.moguzn.com/weixin/images/email.png',
         url: 'https://mp.weixin.qq.com/s/QTwqU2aeRDhnB_jdZ0bxDQ'
       },
        {
         title: '用邮件免费短信提醒的方法',
         description: 'yyyyyy',
-        picurl: 'http://www.moguzn.com/images/pluglist/315M_TEMP.jpg',
+        picurl: 'http://www.moguzn.com/weixin/images/email2.png',
         url: 'https://mp.weixin.qq.com/s/U8V684SXAvaZWOvCA6h0Ow'
       },
        {
         title: '数据上传到乐为物联的方法',
         description: 'yyyyyy',
-        picurl: 'http://www.moguzn.com/images/pluglist/315M_TEMP.jpg',
+        picurl: 'http://www.moguzn.com/weixin/images/lewei.png',
         url: 'https://mp.weixin.qq.com/s/nAFtenyv9DTgA6v2CkT-tw'
       },
        {
         title: '数据上传到中国移动物联网平台的方法',
         description: 'yyyyyy',
-        picurl: 'http://www.moguzn.com/images/pluglist/315M_TEMP.jpg',
+        picurl: 'http://www.moguzn.com/weixin/images/onenet.png',
         url: 'https://mp.weixin.qq.com/s/6nSyZrMgCUe5VnhlNijQtQ'
       },
        {
         title: '常见问题FAQ',
         description: 'yyyyyy',
-        picurl: 'http://www.moguzn.com/images/pluglist/315M_TEMP.jpg',
+        picurl: 'http://www.moguzn.com/weixin/images/faq.png',
         url: 'https://mp.weixin.qq.com/s/imB4FP3eDyfU-XjcTsJlpw'
       }
     ]);
