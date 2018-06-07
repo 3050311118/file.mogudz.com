@@ -5,7 +5,7 @@ var mqtt = require('mqtt');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var path = require('path')
-var wxconfig = require('./config');
+var wxconfig = require('./confighhlab');
 var request = require('request');
 var qs = require('querystring');
 var bodyParser = require('body-parser');
@@ -35,6 +35,42 @@ var config = {
   checkSignature: true // 可选，默认为true。由于微信公众平台接口调试工具在明文模式下不发送签名，所以如要使用该测试工具，请将其设置为false
 };
 
+function replySMS(res)
+{
+      res.reply([
+      {
+        title: '远控二代操作说明',
+        description: 'bbbbbbb',
+        picurl: 'http://www.moguzn.com/weixin/images/sms.png',
+        url: 'http://mp.weixin.qq.com/s?__biz=MzI2NzkzNTkxNg==&mid=100000004&idx=1&sn=e1afd8c55e05943aa1fbe30d4049c37d&chksm=6af608c75d8181d143b68bbdd1931e6ec6845de0be454bf29835ef736f404b61f779e02d2f82&mpshare=1&scene=23&srcid=05207VNkULZZgofAof2yMVXb#rd'
+      },
+       {
+        title: '如何用微信报警',
+        description: 'yyyyyy',
+        picurl: 'http://www.moguzn.com/weixin/images/wechat.png',
+        url: 'https://mp.weixin.qq.com/s/Zce11DdP8O_wqip3QqUxfw'
+      },
+       {
+        title: '如何用群发邮件报警',
+        description: 'yyyyyy',
+        picurl: 'http://www.moguzn.com/weixin/images/email.png',
+        url: 'https://mp.weixin.qq.com/s/QTwqU2aeRDhnB_jdZ0bxDQ'
+      },
+       {
+        title: '用邮件免费短信提醒的方法',
+        description: 'yyyyyy',
+        picurl: 'http://www.moguzn.com/weixin/images/email2.png',
+        url: 'https://mp.weixin.qq.com/s/U8V684SXAvaZWOvCA6h0Ow'
+      },
+       {
+        title: '常见问题FAQ',
+        description: 'yyyyyy',
+        picurl: 'http://www.moguzn.com/weixin/images/faq.png',
+        url: 'https://mp.weixin.qq.com/s/imB4FP3eDyfU-XjcTsJlpw'
+      }
+    ]);
+}
+
 app.use(express.query());
 app.use('/wechat', wechat(config, function (req, res, next) {
   // 微信输入信息都在req.weixin上
@@ -43,80 +79,28 @@ app.use('/wechat', wechat(config, function (req, res, next) {
   console.log(message);
   if(message.MsgType === "event"){
     if(message.Event === "subscribe"){
-      console.log(message.FromUserName)
-      res.reply("感谢使用远程控制精灵")
+        replySMS(res)
     }else if(message.Event === "unsubscribe"){
       console.log(message.FromUserName)
     }else if(message.Event === "scancode_waitmsg"){
       var clientID=message.ScanCodeInfo.ScanResult;
-      BandAction(openid,clientID)
       res.reply("正在绑定\r\n状态灯闪烁时点击确定按键完成绑定!")
     }else if(message.Event === "CLICK"){
-
+      if(message.EventKey=='V1001_GOOD')
+      {
+        replySMS(res)
+      }
     }
   }else if(message.MsgType === "text"){
     var content=message.Content;
-    if (content.substring(0,2)==="bd"){
-      var clientID=content.substring(2);
-      BandAction(openid,clientID)
-      res.reply("正在绑定\r\n状态灯闪烁时点击确定按键完成绑定!")
-    }else if (content.substring(0,2)==="jc"){
-      var clientID=content.substring(2);
-      JCBandAction(openid,clientID)
-      res.reply("正在解除绑定!")
-    }else if (content.substring(0,4)==="wxid"){
+    if (content.substring(0,4)==="wxid"){
       res.reply(message.FromUserName)
     }else{
-      res.reply("发送wxid获取您的微信ID")
+      res.reply("发送wxid获取您在蘑菇公众号的微信唯一ID")
     }
   }
 }));
 
-app.get('/getwxinfo', function (req, res) {
-    var code = req.query.code;
-    var url='https://api.weixin.qq.com/sns/oauth2/access_token?appid='+wxconfig.appid+'&secret='+wxconfig.appsecret+'&code='+code+'&grant_type=authorization_code'
-    request.get(url,function(error, response, body){
-            if(!error && response.statusCode == 200){
-                var data = JSON.parse(body);
-                var url='https://api.weixin.qq.com/sns/oauth2/refresh_token?appid='+wxconfig.appid+'&grant_type=refresh_token&refresh_token='+data.refresh_token;
-                request.get(url,function(error, response, body){
-                    if(!error && response.statusCode == 200)
-                    {
-                      var data = JSON.parse(body);
-                      var url='https://api.weixin.qq.com/sns/userinfo?access_token='+data.access_token+'&openid='+data.openid
-                      request.get(url,function(error, response, body){
-                        if(!error && response.statusCode == 200)
-                        {
-                           var data=JSON.parse(body)
-                           if(data.errcode !== 40001){
-                               console.log(body)
-                               res.render('setinfo',data)
-                               req.session.openid = data.openid;
-                               console.log(data.openid)
-                               console.log(data.nickname)
-                               console.log(data.headimgurl)
-                               // redisClient.hmset(data.openid,"nickname",data.nickname,"img",data.headimgurl,function(err,response){
-                               //    console.log(err,response);
-                               // });
-                           }else{
-
-                           }
-                         }
-                      })
-                    }
-                })
-            }
-        }
-    )
-}) 
-
-app.get('/wxlogin', function (req, res) {
-    console.log('/wxlogin')
-    var router = 'getwxinfo';
-    var return_uri = 'http://wechat.mogudz.com/'+router;
-    var scope = 'snsapi_userinfo';
-    res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid='+wxconfig.appid+'&redirect_uri='+return_uri+'&response_type=code&scope='+scope+'&state=1#wechat_redirect');      
-}) 
 //模板接口
 app.post('/template', function (req, res) {
   req.rawBody = '';
@@ -142,20 +126,6 @@ app.post('/template', function (req, res) {
     res.end("ok")
   }); 
 }) 
-//客服接口
-app.get('/custom', function (req, res) {
-
-}) 
-//获取设备接口
-app.get('/getdevice', function (req, res) {
-  var openid=req.query.openid;
-  //sadd
-  // redisClient.smembers("dev_"+openid,function(err,response){  
-  //     if(!err){  
-  //         res.json(response)
-  //     }
-  // });         
-}) 
 
 app.get('/monitor', function (req, res) {
   res.send("ok")
@@ -176,24 +146,6 @@ var server = app.listen(2000, function () {
   var port = server.address().port
   console.log("wechat http://%s:%s", host, port)
 }) 
-
-
-//微信绑定动作
-function BandAction(openid,toDev){
-  var arr={};
-  arr.t="wxbd";
-  arr.i=openid;
-  console.log(JSON.stringify(arr));
-  // mqttClient.publish(toDev+'/sub',JSON.stringify(arr));
-}
-//微信解除绑定动作
-function JCBandAction(openid,toDev){
-  var arr={};
-  arr.t="wxjc";
-  arr.i=openid;
-  console.log(JSON.stringify(arr));
-  // mqttClient.publish(toDev+'/sub',JSON.stringify(arr));
-}
 
 //定时获取微信access_token
 function getAccessToken() {
@@ -238,7 +190,7 @@ function weixinTemplateRequest(content){
 function WeixinTemplatePush(openid,content,name,sn){
     var myDate = new Date();        
     // var alarmDate = myDate.getYear()+"年"+myDate.getMonth()+"月"+myDate.getDate()+"日"+myDate.getHours()+"点"+myDate.getMinutes()+"分";
-    var alarmDate = (myDate.getYear()-100)+"年"+myDate.getMonth()+"月"+myDate.getDate()+"日"+myDate.getHours()+"时"+myDate.getMinutes()+"分";
+    var alarmDate = (myDate.getYear()-100)+"年"+(myDate.getMonth()+1)+"月"+myDate.getDate()+"日"+myDate.getHours()+"时"+myDate.getMinutes()+"分";
     var model=sn.substr(0,3)
     var templatePush={ 
       "touser":openid, 
