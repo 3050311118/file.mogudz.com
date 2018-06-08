@@ -96,7 +96,7 @@ app.use('/wechat', wechat(config, function (req, res, next) {
     if (content.substring(0,4)==="wxid"){
       res.reply(message.FromUserName)
     }else{
-      res.reply("发送wxid获取您在蘑菇公众号的微信唯一ID")
+      res.reply("发送wxid获取您在实验平台的微信唯一ID")
     }
   }
 }));
