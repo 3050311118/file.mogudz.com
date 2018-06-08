@@ -42,31 +42,31 @@ function replySMS(res)
         title: '远控二代操作说明',
         description: 'bbbbbbb',
         picurl: 'http://www.moguzn.com/weixin/images/sms.png',
-        url: 'http://mp.weixin.qq.com/s?__biz=MzI2NzkzNTkxNg==&mid=100000004&idx=1&sn=e1afd8c55e05943aa1fbe30d4049c37d&chksm=6af608c75d8181d143b68bbdd1931e6ec6845de0be454bf29835ef736f404b61f779e02d2f82&mpshare=1&scene=23&srcid=05207VNkULZZgofAof2yMVXb#rd'
+        url: 'https://mp.weixin.qq.com/s/YQT32aMBIfl9JqG4q7vA1w'
       },
        {
         title: '如何用微信报警',
         description: 'yyyyyy',
         picurl: 'http://www.moguzn.com/weixin/images/wechat.png',
-        url: 'https://mp.weixin.qq.com/s/Zce11DdP8O_wqip3QqUxfw'
+        url: 'https://mp.weixin.qq.com/s/bCMvaTwdYURDe6zA4PdFsA'
       },
        {
         title: '如何用群发邮件报警',
         description: 'yyyyyy',
         picurl: 'http://www.moguzn.com/weixin/images/email.png',
-        url: 'https://mp.weixin.qq.com/s/QTwqU2aeRDhnB_jdZ0bxDQ'
+        url: 'https://mp.weixin.qq.com/s/C1pwysQd8bvu3grRzBMSwA'
       },
        {
         title: '用邮件免费短信提醒的方法',
         description: 'yyyyyy',
         picurl: 'http://www.moguzn.com/weixin/images/email2.png',
-        url: 'https://mp.weixin.qq.com/s/U8V684SXAvaZWOvCA6h0Ow'
+        url: 'https://mp.weixin.qq.com/s/iSMBP3yyf6VMvxjc4XfCuA'
       },
        {
         title: '常见问题FAQ',
         description: 'yyyyyy',
         picurl: 'http://www.moguzn.com/weixin/images/faq.png',
-        url: 'https://mp.weixin.qq.com/s/imB4FP3eDyfU-XjcTsJlpw'
+        url: 'https://mp.weixin.qq.com/s/wTX_LWnmVE8pagrsIvNq6Q'
       }
     ]);
 }
