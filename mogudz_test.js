@@ -290,7 +290,7 @@ function WeixinTemplatePush(openid,content,name,sn,type){
     var model=sn.substr(0,3)
     var templatePush={ 
       "touser":openid, 
-      "template_id":"iEH2KZak1kUyuI7KnEBZ3WTSpp9fbQb69BiUInimQZQ", 
+      "template_id":"qbtRrB7z8LOFulW9VvypegRfxTJz9bBkWUh40bOsRdk", 
       "url":"jssdk.mogudz.com/"+model+".php?sn="+sn, 
       "topcolor":"#FF0000", 
       "data":{ 
