@@ -102,6 +102,9 @@ app.use('/wechat', wechat(config, function (req, res, next) {
       if(message.EventKey=='V1001_GOOD')
       {
         replySMS(res)
+      }else if(message.EventKey=='alarmid')
+      {
+        res.reply(message.FromUserName)
       }
     }
   }else if(message.MsgType === "text"){
