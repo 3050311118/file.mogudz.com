@@ -323,7 +323,7 @@ function WeixinTemplatePush(openid,content,name,sn,type){
    {
      var arr=content.split("`")
      templatePush.data.keyword3.value=arr[0]
-     templatePush.url="http://wechatinfo.moguzn.com/xmj02map?addr="+arr[1]+"&lng="+arr[2]+"&lat="+arr[3];
+     templatePush.url="http://wechatinfo.moguzn.com/xms01baidu?sn="+sn;
    }
    weixinTemplateRequest(templatePush);  
 }
