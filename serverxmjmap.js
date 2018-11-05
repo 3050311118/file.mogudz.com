@@ -20,6 +20,10 @@ app.get('/xmj02map',function(req, res, next){
   lat=req.query.lat
   res.render('xmj02map.html', {addr: addr,lng:lng,lat:lat});
 });
+app.get('/xms01baidu',function(req, res, next){
+  sn=req.query.sn
+  res.render('XMS01BAIDU.html', {sn: sn});
+});
 
 var server = app.listen(8081, function () {
  
